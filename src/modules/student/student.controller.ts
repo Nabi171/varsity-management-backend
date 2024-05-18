@@ -169,7 +169,17 @@ const createStudent = async (req: Request, res: Response) => {
     /////
     const { student: studentData } = req.body;
     const { error, value } = studentSchema.validate(studentData);
-    console.log(error, value);
+
+    // console.log(error, value);
+
+    if (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Something is gone wrong',
+        error: error,
+      });
+    }
+
     const result = await StudentServices.createStudentIntoDB(studentData);
 
     res.status(200).json({
