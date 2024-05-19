@@ -97,7 +97,7 @@ const localGuradianSchema = new Schema<TLocalGuardian>({
 
 const studentSchema = new Schema<TStudent, StudentModel>({
   id: { type: String, required: true, unique: true },
-  password: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   name: {
     type: userNameSchema,
     required: true,
@@ -146,16 +146,28 @@ const studentSchema = new Schema<TStudent, StudentModel>({
 });
 
 //pre save middleware/hook
-studentSchema.pre('save', function () {
+studentSchema.pre('save', async function (next) {
   // console.log(this, 'pre hook:we will save the data');
   const user = this;
-  bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds));
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
 });
 
 //creating a custom static method
 
-studentSchema.post('save', function () {
-  console.log(this, 'pre hook:we will save our data');
+studentSchema.post('save', function (doc, next) {
+  doc.password = '';
+  // console.log(this, 'pre hook:we will save our data');
+  next();
+});
+
+//Query Middleware
+
+studentSchema.pre('find', function (next) {
+  console.log(this);
 });
 
 //creating a custom static method
