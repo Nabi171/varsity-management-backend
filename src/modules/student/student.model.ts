@@ -8,6 +8,8 @@ import {
   StudentModel,
   TUserName,
 } from './student.interface';
+import bcrypt from 'bcrypt';
+import config from '../../config';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -95,6 +97,7 @@ const localGuradianSchema = new Schema<TLocalGuardian>({
 
 const studentSchema = new Schema<TStudent, StudentModel>({
   id: { type: String, required: true, unique: true },
+  password: { type: String, required: true, unique: true },
   name: {
     type: userNameSchema,
     required: true,
@@ -140,6 +143,19 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     enum: ['active', 'blocked'],
     default: 'active',
   },
+});
+
+//pre save middleware/hook
+studentSchema.pre('save', function () {
+  // console.log(this, 'pre hook:we will save the data');
+  const user = this;
+  bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds));
+});
+
+//creating a custom static method
+
+studentSchema.post('save', function () {
+  console.log(this, 'pre hook:we will save our data');
 });
 
 //creating a custom static method
