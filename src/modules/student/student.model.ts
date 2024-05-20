@@ -95,58 +95,70 @@ const localGuradianSchema = new Schema<TLocalGuardian>({
   },
 });
 
-const studentSchema = new Schema<TStudent, StudentModel>({
-  id: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  name: {
-    type: userNameSchema,
-    required: true,
-  },
-  gender: {
-    type: String,
-    // enum: ['male', 'female', 'other'],
-    enum: {
-      values: ['male', 'female', 'other'],
-      message: '{VALUE} is not valid',
+const studentSchema = new Schema<TStudent, StudentModel>(
+  {
+    id: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    name: {
+      type: userNameSchema,
+      required: true,
     },
-    required: true,
+    gender: {
+      type: String,
+      // enum: ['male', 'female', 'other'],
+      enum: {
+        values: ['male', 'female', 'other'],
+        message: '{VALUE} is not valid',
+      },
+      required: true,
+    },
+    dateOfBirth: { type: String },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      // validate: {
+      //   validator: (value: string) => validator.isEmail(value),
+      //   message: '{VALUE} is not a valid email type',
+      // },
+    },
+    contactNo: { type: String, required: true },
+    emergencyContactNo: { type: String, required: true },
+    bloogGroup: {
+      type: String,
+      enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+    },
+    presentAddress: { type: String, required: true },
+    permanentAddres: { type: String, required: true },
+    guardian: {
+      type: guardianSchema,
+      required: true,
+    },
+    localGuardian: {
+      type: localGuradianSchema,
+      required: true,
+    },
+    profileImg: { type: String },
+    isActive: {
+      type: String,
+      enum: ['active', 'blocked'],
+      default: 'active',
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
-  dateOfBirth: { type: String },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    // validate: {
-    //   validator: (value: string) => validator.isEmail(value),
-    //   message: '{VALUE} is not a valid email type',
-    // },
+  {
+    toJSON: {
+      virtuals: true,
+    },
   },
-  contactNo: { type: String, required: true },
-  emergencyContactNo: { type: String, required: true },
-  bloogGroup: {
-    type: String,
-    enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-  },
-  presentAddress: { type: String, required: true },
-  permanentAddres: { type: String, required: true },
-  guardian: {
-    type: guardianSchema,
-    required: true,
-  },
-  localGuardian: {
-    type: localGuradianSchema,
-    required: true,
-  },
-  profileImg: { type: String },
-  isActive: {
-    type: String,
-    enum: ['active', 'blocked'],
-    default: 'active',
-  },
-  isDeleted: {
-    type: Boolean,
-    default: false,
-  },
+);
+
+//virtual
+studentSchema.virtual('fullName').get(function () {
+  return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
 });
 
 //pre save middleware/hook
