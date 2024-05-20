@@ -143,6 +143,10 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     enum: ['active', 'blocked'],
     default: 'active',
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //pre save middleware/hook
@@ -167,7 +171,21 @@ studentSchema.post('save', function (doc, next) {
 //Query Middleware
 
 studentSchema.pre('find', function (next) {
-  console.log(this);
+  this.find({ isDeleted: { $ne: true } });
+  // console.log(this);
+  next();
+});
+
+studentSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  // console.log(this);
+  next();
+});
+
+//[$match:{isDeleted:{$ne:true}},{'$match':{id:'123456}}]
+studentSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
 });
 
 //creating a custom static method
