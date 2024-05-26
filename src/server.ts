@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import app from './app';
-import config from './config';
-// main().catch((err) => console.log(err));
+import config from './app/config';
 
 async function main() {
   try {
