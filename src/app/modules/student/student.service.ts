@@ -1,7 +1,7 @@
 import { Student } from './student.model';
 
 const getAllStudentsFromDB = async () => {
-  const result = await Student.find();
+  const result = await Student.find().populate('admissionSemester');
   return result;
 };
 
