@@ -1,4 +1,4 @@
-import { httpStatus } from 'http-status';
+import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import { Student } from './student.model';
 import AppError from '../../errors/AppError';
@@ -17,7 +17,7 @@ const getAllStudentsFromDB = async () => {
 };
 
 const getSingleStudentFromDB = async (id: string) => {
-  const result = await Student.findById(id)
+  const result = await Student.findOne({ id })
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
