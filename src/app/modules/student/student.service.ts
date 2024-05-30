@@ -9,7 +9,6 @@ const getAllStudentsFromDB = async () => {
         path: 'academicFaculty',
       },
     });
-
   return result;
 };
 
