@@ -83,7 +83,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 //     studentData.id = newUser.id;
 //     studentData.user = newUser._id; //reference _id
 
-//     const newStudent = await Student.create(studentData
+//     const newStudent = await Student.create(student
 
 export const UserServices = {
   createStudentIntoDB,
