@@ -5,15 +5,15 @@
 import { ErrorRequestHandler } from 'express';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  const statusCode = 500;
-  const message = err.message || 'Something went wrong!';
+  let statusCode = 500;
+  let message = err.message || 'Something went wrong!';
 
   type TErrorSource = {
     path: string | number;
     message: string;
   }[];
 
-  const errorSources: TErrorSource = [
+  let errorSources: TErrorSource = [
     {
       path: '',
       message: 'Something went wrong',
@@ -24,7 +24,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     success: false,
     message,
     errorSources,
-    // error: err,
+    error: err,
   });
 };
 
