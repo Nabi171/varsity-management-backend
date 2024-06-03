@@ -1,3 +1,4 @@
+import { TAcademicSemester } from './../academicSemester/academicSemester.interface';
 import mongoose from 'mongoose';
 import config from '../../config';
 import { TStudent } from '../student/student.interface';
@@ -29,7 +30,9 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   try {
     session.startTransaction();
     //set  generated id
-    userData.id = await generateStudentId(admissionSemester);
+    userData.id = await generateStudentId(
+      admissionSemester as TAcademicSemester,
+    );
 
     // create a user (transaction-1)
     const newUser = await User.create([userData], { session }); // array
@@ -60,30 +63,6 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     throw new Error(err);
   }
 };
-
-// const createStudentIntoDB = async (password: string, studentData: TStudent) => {
-//   // create a user object
-//   const userData: Partial<TUser> = {};
-
-//   //if password is not given , use deafult password
-//   userData.password = password || (config.default_password as string);
-
-//   //set student role
-//   userData.role = 'student';
-
-//   //set manually generated it
-//   userData.id = '2030100001';
-
-//   // create a user
-//   const newUser = await User.create(userData);
-
-//   //create a student
-//   if (Object.keys(newUser).length) {
-//     // set id , _id as user
-//     studentData.id = newUser.id;
-//     studentData.user = newUser._id; //reference _id
-
-//     const newStudent = await Stud
 
 export const UserServices = {
   createStudentIntoDB,

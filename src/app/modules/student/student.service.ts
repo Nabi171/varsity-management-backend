@@ -3,8 +3,14 @@ import mongoose from 'mongoose';
 import { Student } from './student.model';
 import AppError from '../../errors/AppError';
 import { User } from '../user/user.model';
+import { TStudent } from './student.interface';
 
-const getAllStudentsFromDB = async () => {
+const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
+  // HOW OUR FORMAT SHOULD BE FOR PARTIAL MATCH  :
+  //  { email: { $regex : query.searchTerm , $options: i}}
+  //  { presentAddress: { $regex : query.searchTerm , $options: i}}
+  //  { 'name.firstName': { $regex : query.searchTerm , $options: i}}
+
   const result = await Student.find()
     .populate('admissionSemester')
     .populate({
