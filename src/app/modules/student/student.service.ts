@@ -204,7 +204,7 @@ const deleteStudentFromDB = async (id: string) => {
     const userId = deletedStudent.user;
 
     const deletedUser = await User.findOneAndUpdate(
-      { id },
+      userId,
       { isDeleted: true },
       { new: true, session },
     );
