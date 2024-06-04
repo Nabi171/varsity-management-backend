@@ -1,3 +1,4 @@
+import { FacultyRoutes } from './../modules/Faculty/faculty.route';
 import { AcademicFacultyRoutes } from './../modules/academicFaculty/academicFaculty.route';
 import { Router } from 'express';
 import { AcademicSemesterRoutes } from '../modules/academicSemester/academicSemester.route';
@@ -15,6 +16,10 @@ const moduleRoutes = [
   {
     path: '/students',
     route: StudentRoutes,
+  },
+  {
+    path: '/faculties',
+    route: FacultyRoutes,
   },
   {
     path: '/academic-semesters',
