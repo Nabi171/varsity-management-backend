@@ -1,5 +1,5 @@
 import express from 'express';
-// import validateRequest from '../../middlewares/validateRequest';
+// import validateRequest from '../../m/validateRequest';
 import { CourseControllers } from './course.controller';
 import { CourseValidations } from './course.validation';
 import validateRequest from '../middlewares/validateRequest';
