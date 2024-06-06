@@ -11,7 +11,6 @@ const createSemesterRegistrationValidationSchema = z.object({
     maxCredit: z.number(),
   }),
 });
-
 const upadateSemesterRegistrationValidationSchema = z.object({
   body: z.object({
     academicSemester: z.string().optional(),
