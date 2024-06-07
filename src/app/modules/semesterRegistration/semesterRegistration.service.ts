@@ -46,7 +46,6 @@ const createSemesterRegistrationIntoDB = async (
       'This academic semester not found !',
     );
   }
-
   // check if the semester is already registered!
   const isSemesterRegistrationExists = await SemesterRegistration.findOne({
     academicSemester,
