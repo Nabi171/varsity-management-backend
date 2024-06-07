@@ -7,7 +7,7 @@ import { AcademicFaculty } from '../academicFaculty/academicFaculty.model';
 import { SemesterRegistration } from '../semesterRegistration/semesterRegistration.model';
 import { TOfferedCourse } from './OfferedCourse.interface';
 import { OfferedCourse } from './OfferedCourse.model';
-// import { hasTimeConflict } from './OfferedCourse.utils';
+// import { hasTimeConflict } from './Offe
 import { Course } from '../../Course/course.model';
 import { hasTimeConflict } from './OfferedCourse.utils';
 
