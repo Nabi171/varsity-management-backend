@@ -66,3 +66,9 @@ class QueryBuilder<T> {
 }
 
 export default QueryBuilder;
+
+// NODE_ENV=development
+// PORT=5000
+// DATABASE_URL=mongodb+srv://admin-um:DUzcnjyjHRYVn6DZ@cluster0.elqsdp0.mongodb.net/first-project?retryWrites=true&w=majority&appName=Cluster0
+// BCRYPT_SALT_ROUNDS=12
+// DEFAULT_PASS=phuniversity!@#
